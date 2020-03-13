@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1704eb07434d4e36887953de2816b92d" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_HakimModel.Doctor" Width="1.5" PointX="6" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_HakimModel.Insurance" Width="1.5" PointX="6" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_HakimModel.Role" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_HakimModel.Service" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_HakimModel.ServiceGroup" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_HakimModel.ServiceReception" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_HakimModel.sysdiagram" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_HakimModel.User" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_HakimModel.VisitReception" Width="1.5" PointX="8.25" PointY="4.125" IsExpanded="true" />
+        <AssociationConnector Association="DB_HakimModel.FK_VisitReception_Doctor" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_HakimModel.FK_VisitReception_Insurance" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_HakimModel.FK_User_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_HakimModel.FK_Service_ServiceGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_HakimModel.FK_ServiceReception_Service" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_HakimModel.FK_ServiceReception_ServiceGroup" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_HakimModel.FK_ServiceReception_User" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_HakimModel.FK_VisitReception_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

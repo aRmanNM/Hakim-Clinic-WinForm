@@ -1,0 +1,599 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_HakimModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="DoctorId" />
+          </Key>
+          <Property Name="DoctorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DoctorTitle" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Insurance">
+          <Key>
+            <PropertyRef Name="InsuranceId" />
+          </Key>
+          <Property Name="InsuranceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InsuranceTitle" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="InsurancePrice" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="RoleTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="ServiceId" />
+          </Key>
+          <Property Name="ServiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceTitle" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ServiceGroupId" Type="int" Nullable="false" />
+          <Property Name="ServicePrice" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceGroup">
+          <Key>
+            <PropertyRef Name="ServiceGroupId" />
+          </Key>
+          <Property Name="ServiceGroupId" Type="int" Nullable="false" />
+          <Property Name="ServiceGroupTitle" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ServiceReception">
+          <Key>
+            <PropertyRef Name="ServiceReceptionId" />
+          </Key>
+          <Property Name="ServiceReceptionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ServiceId" Type="int" Nullable="false" />
+          <Property Name="ServiceGroupId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UserPassword" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VisitReception">
+          <Key>
+            <PropertyRef Name="VisitReceptionId" />
+          </Key>
+          <Property Name="VisitReceptionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="InsuranceId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Service_ServiceGroup">
+          <End Role="ServiceGroup" Type="Self.ServiceGroup" Multiplicity="1" />
+          <End Role="Service" Type="Self.Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceGroup">
+              <PropertyRef Name="ServiceGroupId" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="ServiceGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceReception_Service">
+          <End Role="Service" Type="Self.Service" Multiplicity="1" />
+          <End Role="ServiceReception" Type="Self.ServiceReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="ServiceId" />
+            </Principal>
+            <Dependent Role="ServiceReception">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceReception_ServiceGroup">
+          <End Role="ServiceGroup" Type="Self.ServiceGroup" Multiplicity="1" />
+          <End Role="ServiceReception" Type="Self.ServiceReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceGroup">
+              <PropertyRef Name="ServiceGroupId" />
+            </Principal>
+            <Dependent Role="ServiceReception">
+              <PropertyRef Name="ServiceGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceReception_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="ServiceReception" Type="Self.ServiceReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ServiceReception">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitReception_Doctor">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
+          <End Role="VisitReception" Type="Self.VisitReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorId" />
+            </Principal>
+            <Dependent Role="VisitReception">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitReception_Insurance">
+          <End Role="Insurance" Type="Self.Insurance" Multiplicity="1" />
+          <End Role="VisitReception" Type="Self.VisitReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insurance">
+              <PropertyRef Name="InsuranceId" />
+            </Principal>
+            <Dependent Role="VisitReception">
+              <PropertyRef Name="InsuranceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitReception_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="VisitReception" Type="Self.VisitReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="VisitReception">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_HakimModelStoreContainer">
+          <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Insurance" EntityType="Self.Insurance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Service" EntityType="Self.Service" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceGroup" EntityType="Self.ServiceGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceReception" EntityType="Self.ServiceReception" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VisitReception" EntityType="Self.VisitReception" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Service_ServiceGroup" Association="Self.FK_Service_ServiceGroup">
+            <End Role="ServiceGroup" EntitySet="ServiceGroup" />
+            <End Role="Service" EntitySet="Service" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceReception_Service" Association="Self.FK_ServiceReception_Service">
+            <End Role="Service" EntitySet="Service" />
+            <End Role="ServiceReception" EntitySet="ServiceReception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceReception_ServiceGroup" Association="Self.FK_ServiceReception_ServiceGroup">
+            <End Role="ServiceGroup" EntitySet="ServiceGroup" />
+            <End Role="ServiceReception" EntitySet="ServiceReception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceReception_User" Association="Self.FK_ServiceReception_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="ServiceReception" EntitySet="ServiceReception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitReception_Doctor" Association="Self.FK_VisitReception_Doctor">
+            <End Role="Doctor" EntitySet="Doctor" />
+            <End Role="VisitReception" EntitySet="VisitReception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitReception_Insurance" Association="Self.FK_VisitReception_Insurance">
+            <End Role="Insurance" EntitySet="Insurance" />
+            <End Role="VisitReception" EntitySet="VisitReception" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitReception_User" Association="Self.FK_VisitReception_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="VisitReception" EntitySet="VisitReception" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_HakimModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Doctor">
+          <Key>
+            <PropertyRef Name="DoctorId" />
+          </Key>
+          <Property Name="DoctorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DoctorTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="VisitReceptions" Relationship="Self.FK_VisitReception_Doctor" FromRole="Doctor" ToRole="VisitReception" />
+        </EntityType>
+        <EntityType Name="Insurance">
+          <Key>
+            <PropertyRef Name="InsuranceId" />
+          </Key>
+          <Property Name="InsuranceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InsuranceTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="InsurancePrice" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="VisitReceptions" Relationship="Self.FK_VisitReception_Insurance" FromRole="Insurance" ToRole="VisitReception" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="RoleTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="ServiceId" />
+          </Key>
+          <Property Name="ServiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ServiceGroupId" Type="Int32" Nullable="false" />
+          <Property Name="ServicePrice" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ServiceGroup" Relationship="Self.FK_Service_ServiceGroup" FromRole="Service" ToRole="ServiceGroup" />
+          <NavigationProperty Name="ServiceReceptions" Relationship="Self.FK_ServiceReception_Service" FromRole="Service" ToRole="ServiceReception" />
+        </EntityType>
+        <EntityType Name="ServiceGroup">
+          <Key>
+            <PropertyRef Name="ServiceGroupId" />
+          </Key>
+          <Property Name="ServiceGroupId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceGroupTitle" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Services" Relationship="Self.FK_Service_ServiceGroup" FromRole="ServiceGroup" ToRole="Service" />
+          <NavigationProperty Name="ServiceReceptions" Relationship="Self.FK_ServiceReception_ServiceGroup" FromRole="ServiceGroup" ToRole="ServiceReception" />
+        </EntityType>
+        <EntityType Name="ServiceReception">
+          <Key>
+            <PropertyRef Name="ServiceReceptionId" />
+          </Key>
+          <Property Name="ServiceReceptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceId" Type="Int32" Nullable="false" />
+          <Property Name="ServiceGroupId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Service" Relationship="Self.FK_ServiceReception_Service" FromRole="ServiceReception" ToRole="Service" />
+          <NavigationProperty Name="ServiceGroup" Relationship="Self.FK_ServiceReception_ServiceGroup" FromRole="ServiceReception" ToRole="ServiceGroup" />
+          <NavigationProperty Name="User" Relationship="Self.FK_ServiceReception_User" FromRole="ServiceReception" ToRole="User" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="ServiceReceptions" Relationship="Self.FK_ServiceReception_User" FromRole="User" ToRole="ServiceReception" />
+          <NavigationProperty Name="VisitReceptions" Relationship="Self.FK_VisitReception_User" FromRole="User" ToRole="VisitReception" />
+        </EntityType>
+        <EntityType Name="VisitReception">
+          <Key>
+            <PropertyRef Name="VisitReceptionId" />
+          </Key>
+          <Property Name="VisitReceptionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="InsuranceId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="DoctorId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Doctor" Relationship="Self.FK_VisitReception_Doctor" FromRole="VisitReception" ToRole="Doctor" />
+          <NavigationProperty Name="Insurance" Relationship="Self.FK_VisitReception_Insurance" FromRole="VisitReception" ToRole="Insurance" />
+          <NavigationProperty Name="User" Relationship="Self.FK_VisitReception_User" FromRole="VisitReception" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_VisitReception_Doctor">
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
+          <End Role="VisitReception" Type="Self.VisitReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctor">
+              <PropertyRef Name="DoctorId" />
+            </Principal>
+            <Dependent Role="VisitReception">
+              <PropertyRef Name="DoctorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitReception_Insurance">
+          <End Role="Insurance" Type="Self.Insurance" Multiplicity="1" />
+          <End Role="VisitReception" Type="Self.VisitReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Insurance">
+              <PropertyRef Name="InsuranceId" />
+            </Principal>
+            <Dependent Role="VisitReception">
+              <PropertyRef Name="InsuranceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Service_ServiceGroup">
+          <End Role="ServiceGroup" Type="Self.ServiceGroup" Multiplicity="1" />
+          <End Role="Service" Type="Self.Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceGroup">
+              <PropertyRef Name="ServiceGroupId" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="ServiceGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceReception_Service">
+          <End Role="Service" Type="Self.Service" Multiplicity="1" />
+          <End Role="ServiceReception" Type="Self.ServiceReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="ServiceId" />
+            </Principal>
+            <Dependent Role="ServiceReception">
+              <PropertyRef Name="ServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceReception_ServiceGroup">
+          <End Role="ServiceGroup" Type="Self.ServiceGroup" Multiplicity="1" />
+          <End Role="ServiceReception" Type="Self.ServiceReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ServiceGroup">
+              <PropertyRef Name="ServiceGroupId" />
+            </Principal>
+            <Dependent Role="ServiceReception">
+              <PropertyRef Name="ServiceGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceReception_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="ServiceReception" Type="Self.ServiceReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ServiceReception">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VisitReception_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="VisitReception" Type="Self.VisitReception" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="VisitReception">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_HakimEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Doctors" EntityType="Self.Doctor" />
+          <EntitySet Name="Insurances" EntityType="Self.Insurance" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Services" EntityType="Self.Service" />
+          <EntitySet Name="ServiceGroups" EntityType="Self.ServiceGroup" />
+          <EntitySet Name="ServiceReceptions" EntityType="Self.ServiceReception" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="VisitReceptions" EntityType="Self.VisitReception" />
+          <AssociationSet Name="FK_VisitReception_Doctor" Association="Self.FK_VisitReception_Doctor">
+            <End Role="Doctor" EntitySet="Doctors" />
+            <End Role="VisitReception" EntitySet="VisitReceptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitReception_Insurance" Association="Self.FK_VisitReception_Insurance">
+            <End Role="Insurance" EntitySet="Insurances" />
+            <End Role="VisitReception" EntitySet="VisitReceptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Service_ServiceGroup" Association="Self.FK_Service_ServiceGroup">
+            <End Role="ServiceGroup" EntitySet="ServiceGroups" />
+            <End Role="Service" EntitySet="Services" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceReception_Service" Association="Self.FK_ServiceReception_Service">
+            <End Role="Service" EntitySet="Services" />
+            <End Role="ServiceReception" EntitySet="ServiceReceptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceReception_ServiceGroup" Association="Self.FK_ServiceReception_ServiceGroup">
+            <End Role="ServiceGroup" EntitySet="ServiceGroups" />
+            <End Role="ServiceReception" EntitySet="ServiceReceptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceReception_User" Association="Self.FK_ServiceReception_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ServiceReception" EntitySet="ServiceReceptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VisitReception_User" Association="Self.FK_VisitReception_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="VisitReception" EntitySet="VisitReceptions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_HakimModelStoreContainer" CdmEntityContainer="DB_HakimEntities">
+          <EntitySetMapping Name="Doctors">
+            <EntityTypeMapping TypeName="DB_HakimModel.Doctor">
+              <MappingFragment StoreEntitySet="Doctor">
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+                <ScalarProperty Name="DoctorTitle" ColumnName="DoctorTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Insurances">
+            <EntityTypeMapping TypeName="DB_HakimModel.Insurance">
+              <MappingFragment StoreEntitySet="Insurance">
+                <ScalarProperty Name="InsuranceId" ColumnName="InsuranceId" />
+                <ScalarProperty Name="InsuranceTitle" ColumnName="InsuranceTitle" />
+                <ScalarProperty Name="InsurancePrice" ColumnName="InsurancePrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="DB_HakimModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleTitle" ColumnName="RoleTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="DB_HakimModel.Service">
+              <MappingFragment StoreEntitySet="Service">
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="ServiceTitle" ColumnName="ServiceTitle" />
+                <ScalarProperty Name="ServiceGroupId" ColumnName="ServiceGroupId" />
+                <ScalarProperty Name="ServicePrice" ColumnName="ServicePrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceGroups">
+            <EntityTypeMapping TypeName="DB_HakimModel.ServiceGroup">
+              <MappingFragment StoreEntitySet="ServiceGroup">
+                <ScalarProperty Name="ServiceGroupId" ColumnName="ServiceGroupId" />
+                <ScalarProperty Name="ServiceGroupTitle" ColumnName="ServiceGroupTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceReceptions">
+            <EntityTypeMapping TypeName="DB_HakimModel.ServiceReception">
+              <MappingFragment StoreEntitySet="ServiceReception">
+                <ScalarProperty Name="ServiceReceptionId" ColumnName="ServiceReceptionId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+                <ScalarProperty Name="ServiceGroupId" ColumnName="ServiceGroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DB_HakimModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DB_HakimModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VisitReceptions">
+            <EntityTypeMapping TypeName="DB_HakimModel.VisitReception">
+              <MappingFragment StoreEntitySet="VisitReception">
+                <ScalarProperty Name="VisitReceptionId" ColumnName="VisitReceptionId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="InsuranceId" ColumnName="InsuranceId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
